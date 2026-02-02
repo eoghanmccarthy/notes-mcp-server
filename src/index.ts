@@ -4,8 +4,8 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
 
-const API_BASE = process.env.BLOG_API_URL || "https://www.eoghanmccarthy.com";
-const AUTH_KEY = process.env.BLOG_AUTH_KEY || "";
+const API_BASE = process.env.API_BASE || "https://www.eoghanmccarthy.com/api";
+const AUTH_KEY = process.env.AUTH_KEY || "";
 
 const server = new McpServer({
   name: "notes",
@@ -26,7 +26,7 @@ server.registerTool(
         content: [
           {
             type: "text",
-            text: "Error: BLOG_AUTH_KEY environment variable is not set",
+            text: "Error: AUTH_KEY environment variable is not set",
           },
         ],
       };
@@ -36,7 +36,7 @@ server.registerTool(
     formData.append("content", content);
 
     try {
-      const response = await fetch(`${API_BASE}/api/posts/create`, {
+      const response = await fetch(`${API_BASE}/posts/create`, {
         method: "POST",
         headers: {
           "X-Custom-Auth-Key": AUTH_KEY,
